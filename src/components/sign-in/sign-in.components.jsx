@@ -1,4 +1,8 @@
 import React from "react";
+
+import FormInput from "../form-input/form-input.component";
+import CustomButton from "../custom-button/custom-button.components";
+
 import "./sign-in.styles.scss";
 
 class SignIn extends React.Component {
@@ -11,44 +15,46 @@ class SignIn extends React.Component {
     };
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  handleSubmit = (event) => {
+    event.preventDefault();
 
     this.setState({ email: "", password: "" });
   };
-  handleChange = (e) => {
-    const { name, value } = e.target;
+
+  handleChange = (event) => {
+    const { value, name } = event.target;
+
     this.setState({ [name]: value });
-    // name could be email or password
-    // we are doing it dynamically without makig two functions for each
   };
+
   render() {
     return (
       <div className="sign-in">
         <h2>I already have an account</h2>
-        <span>sign in with email</span>
+        <span>Sign in with your email and password</span>
+
         <form onSubmit={this.handleSubmit}>
-          <input
-            type="email"
+          <FormInput
             name="email"
-            id=""
-            onChange={this.handleChange}
+            type="email"
+            handleChange={this.handleChange}
             value={this.state.email}
-          />
-          <label> Email</label>
-          <input
-            type="password"
-            name="password"
-            id=""
-            onChange={this.handleChange}
-            value={this.state.email}
+            label="email"
             required
           />
-          <label>password</label>
-          <input type="submit" value="submit form" />
+          <FormInput
+            name="password"
+            type="password"
+            value={this.state.password}
+            handleChange={this.handleChange}
+            label="password"
+            required
+          />
+          <CustomButton type="submit"> Sign in </CustomButton>
         </form>
       </div>
     );
   }
 }
+
 export default SignIn;
