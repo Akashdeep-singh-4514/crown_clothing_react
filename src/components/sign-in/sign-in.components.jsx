@@ -18,10 +18,15 @@ class SignIn extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const url = "http://127.0.0.1:8081/users";
+    const url = "http://127.0.0.1:8081/verify";
+    const user = {
+      email: this.state.email,
+      password: this.state.password,
+    };
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", url);
+    xhr.open("POST", url);
     xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+    xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = () => {
       if (xhr.readyState == 4 && xhr.status == 200) {
         const response = JSON.parse(xhr.responseText);
@@ -29,7 +34,7 @@ class SignIn extends React.Component {
         console.log(response);
       }
     };
-    xhr.send();
+    xhr.send(JSON.stringify(user));
   };
 
   handleChange = (event) => {

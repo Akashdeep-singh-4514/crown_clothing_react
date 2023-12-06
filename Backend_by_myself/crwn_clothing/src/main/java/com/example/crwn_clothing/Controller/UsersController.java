@@ -3,10 +3,7 @@ package com.example.crwn_clothing.Controller;
 import com.example.crwn_clothing.Model.User;
 import com.example.crwn_clothing.Services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,4 +18,10 @@ public class UsersController {
     {
         return userServices.getAllClients();
     }
+
+    @RequestMapping(method = RequestMethod.POST,value = "/verify")
+    public String verifyUser(@RequestBody User input){
+        return userServices.verifyAuth(input);
+    }
+
 }

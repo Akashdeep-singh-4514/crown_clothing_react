@@ -19,4 +19,16 @@ public class UserServices {
         userRepository.findAll().forEach(user -> clients.add(user));
         return clients;
     }
+
+
+    public String verifyAuth(User input) {
+        List<User> list=getAllClients();
+        for (int i = 0; i < list.size(); i++)
+        {
+            if(list.get(i).getEmail().equalsIgnoreCase(input.getEmail()) && list.get(i).getPassword().equals(input.getPassword())){
+                return  "true";
+            }
+        }
+        return  "false";
+    }
 }
