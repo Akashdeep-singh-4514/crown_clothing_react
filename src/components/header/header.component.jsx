@@ -12,7 +12,7 @@ const Header = () => {
         <Logo className="logo" />
       </Link>
       <div className="options">
-        <Link className="option" to="/">
+        <Link className="option" to="/home">
           HOME
         </Link>
         <Link className="option" to="/shop">
@@ -21,7 +21,7 @@ const Header = () => {
         <Link className="option" to="/contact">
           CONTACT
         </Link>
-        <Link className="option" to="/signin">
+        <Link className="option" to="/">
           Sign in
         </Link>
       </div>

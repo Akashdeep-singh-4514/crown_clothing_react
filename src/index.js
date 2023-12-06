@@ -16,9 +16,9 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />} >
-          <Route path="" element={<HomePage />} />
+          <Route path="home" element={<HomePage />} />
           <Route path="shop" element={<ShopPage />} />
-          <Route path="signin" element={<SignInSignOutPage />} />
+          <Route path="" element={<SignInSignOutPage />} />
         </Route>
       </Routes></BrowserRouter>
   </React.StrictMode>

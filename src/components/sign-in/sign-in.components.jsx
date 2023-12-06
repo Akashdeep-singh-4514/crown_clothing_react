@@ -18,7 +18,18 @@ class SignIn extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    this.setState({ email: "", password: "" });
+    const url = "http://127.0.0.1:8081/users";
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        const response = JSON.parse(xhr.responseText);
+
+        console.log(response);
+      }
+    };
+    xhr.send();
   };
 
   handleChange = (event) => {
@@ -33,7 +44,7 @@ class SignIn extends React.Component {
         <h2>I already have an account</h2>
         <span>Sign in with your email and password</span>
 
-        <form onSubmit={this.handleSubmit}>
+        <form>
           <FormInput
             name="email"
             type="email"
@@ -50,7 +61,10 @@ class SignIn extends React.Component {
             label="password"
             required
           />
-          <CustomButton type="submit"> Sign in </CustomButton>
+          <CustomButton type="submit" onClick={this.handleSubmit}>
+            {" "}
+            Sign in{" "}
+          </CustomButton>
         </form>
       </div>
     );
