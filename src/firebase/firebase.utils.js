@@ -1,6 +1,6 @@
-import firebase from 'firebase/app'
-import 'firebase/firestore'
-import 'firebase/auth'
+import { initializeApp } from 'firebase/app';
+import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 const config = {
     apiKey: "AIzaSyBPFsSAEdk2-gdyHH42lNM08-XihX4iTNA",
@@ -10,14 +10,25 @@ const config = {
     messagingSenderId: "1063157106800",
     appId: "1:1063157106800:web:1507a35efedbd320234cb5",
     measurementId: "G-FP8FF21YR2"
-}
+};
 
-firebase.initializeApp(config)
-export const auth = firebase.auth()
-export const firestore = firebase.firestore()
+const firebaseApp = initializeApp(config);
+const auth = getAuth(firebaseApp);
+const firestore = getFirestore(firebaseApp);
 
-const provider = new firebase.auth.GoogleAuthProvider()
-provider.setCustomParameters({ prompt: 'select_account' })
-export const signInWithGoogle = () => auth.signInWithPopup(provider)
+const provider = new GoogleAuthProvider();
+provider.setCustomParameters({ prompt: 'select_account' });
 
-export default firebase
+const signInWithGoogle = () => {
+    signInWithRedirect(auth, provider)
+        .then(() => {
+            return getRedirectResult(auth);
+        })
+        .catch((error) => {
+            // Handle errors here
+            console.error(error);
+        });
+};
+
+export { auth, firestore, signInWithGoogle };
+export default firebaseApp;
