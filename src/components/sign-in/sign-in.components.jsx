@@ -2,7 +2,7 @@ import React from "react";
 
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.components";
-
+import { signInWithGoogle } from "../../firebase/firebase.utils";
 import "./sign-in.styles.scss";
 
 class SignIn extends React.Component {
@@ -18,23 +18,7 @@ class SignIn extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    const url = "http://127.0.0.1:8081/verify";
-    const user = {
-      email: this.state.email,
-      password: this.state.password,
-    };
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", url);
-    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        const response = JSON.parse(xhr.responseText);
-
-        console.log(response);
-      }
-    };
-    xhr.send(JSON.stringify(user));
+    this.setState({ email: "", password: "" });
   };
 
   handleChange = (event) => {
@@ -49,7 +33,7 @@ class SignIn extends React.Component {
         <h2>I already have an account</h2>
         <span>Sign in with your email and password</span>
 
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <FormInput
             name="email"
             type="email"
@@ -66,9 +50,10 @@ class SignIn extends React.Component {
             label="password"
             required
           />
-          <CustomButton type="submit" onClick={this.handleSubmit}>
+          <CustomButton type="submit"> Sign in </CustomButton>
+          <CustomButton onClick={signInWithGoogle}>
             {" "}
-            Sign in{" "}
+            Sign in with google{" "}
           </CustomButton>
         </form>
       </div>
